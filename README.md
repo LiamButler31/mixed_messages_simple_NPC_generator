@@ -1,5 +1,5 @@
 # Codecademy Mixed Messages Project
----
+
 ## Simple NPC Generator
 
 A tool for generating random NPCs for role playing games such as Dungeons and Dragons or similar.
