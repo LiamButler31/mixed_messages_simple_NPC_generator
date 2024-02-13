@@ -1,6 +1,11 @@
+//Get a random number between 0 and n.
+const randomNum = n => {
+    return Math.floor(Math.random() * n)
+}
+
 //Get a random value from 1-100
 const rollD100 = () => {
-    return Math.floor(Math.random()*100) + 1
+    return randomNum(100) + 1
 }
 
 //Get a random species from the list.
@@ -12,7 +17,7 @@ const getSpecies = (input = '') => {
     } 
     const speciesArr = ["human", "elf", "half-elf", "dwarf", "halfling", "tiefling", "dragonborn", "gnome", "half-orc", "tabaxi", "goblin"]
 
-    return speciesArr[Math.floor(Math.random()*speciesArr.length)]
+    return speciesArr[randomNum(speciesArr.length)]
 }
 
 //Get a random gender and pronouns.
@@ -23,34 +28,29 @@ const getGender = (input = '') => {
         return input
     }
 
-    let gender = {
-        gender: "",
-        subPronoun: "",
-        obPronoun: "",
-        posPronoun: "",
-        conjugation: "s"
+    class Gender {
+        //Class constructor takes gender, subject pronoun, object pronoun, and possesive adjective. Conjugation accounts for interaction with verbs. Default is "s". Third person pronouns should pass an empty string as the final argument.
+        constructor(gender,subPronoun,obPronoun,posAdj,conjugation="s") {
+            this.gender = gender;
+            this.subPronoun = subPronoun;
+            this.obPronoun = obPronoun;
+            this.posAdj = posAdj;
+            this.conjugation = conjugation
+        }
+
     }
 
     const roll = rollD100()
+    let gender
 
     if (roll <= 48) {
-        gender.gender = "male"
-        gender.subPronoun = "he"
-        gender.obPronoun = "him"
-        gender.posPronoun = "his"
+        gender = new Gender("male", "he", "him", "his")
 
     } else if (roll <= 96) {
-        gender.gender = "female"
-        gender.subPronoun = "she"
-        gender.obPronoun = "her"
-        gender.posPronoun = "her"
+        gender = new Gender("female", "she", "her", "her")
 
     } else {
-        gender.gender = "non-binary"
-        gender.subPronoun = "they"
-        gender.obPronoun = "them"
-        gender.posPronoun = "their"
-        gender.conjugation = ""
+        gender = new Gender("non-binary", "they", "them", "their", "")
     }
 
     return gender
@@ -65,7 +65,7 @@ const getDescription = (invoke = true) => {
         return ""
     }
 
-    return adj[Math.floor(Math.random()*adj.length)] + " "
+    return adj[randomNum(adj.length)] + " "
 }
 
 //Generate a simple attitude held towards to the party. Can be passed false as an argument to skip calling in final generation.
@@ -76,7 +76,7 @@ const getAttitude = (invoke = true) => {
         return ""
     }
 
-    return adj[Math.floor(Math.random()*adj.length)]
+    return adj[randomNum(adj.length)]
 }
 
 const capitalFirstLetter = str => {
